@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [ "$#" -ne 1 ]; then
+    echo "One parameter (file.nasm) required"
+    exit;
+fi
+
+set -e
+
+COM_NAME=$(basename $1 .nasm).com
+
+nasm -fbin $1 -o $COM_NAME && dosbox ./$COM_NAME
