@@ -18,6 +18,25 @@ mov ax, 0 ; color index
 mov cx, 320*200/2 ; num repeats
 rep stosw
 
+; create grey palette
+xor ax, ax
+
+.loop:
+mov bx, ax ; color index
+mov dh, al ; red (0-63)
+shr dh, 2 ; shift to right, divide by 4, convert max 255 to max 63
+mov ch, dh ; green (0-63)
+mov cl, dh ; blue (0-63)
+
+push ax
+mov ax, 1010h
+int 10h
+pop ax
+
+inc ax
+cmp ax, 255
+jl .loop
+
 ; draw palette
 xor cx, cx ; y
 
